@@ -1,0 +1,39 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class PaymentPage {
+    WebDriver driver;
+    public PaymentPage(WebDriver driver) {
+        this.driver=driver;
+    }
+    private By NameOnCard = By.xpath("//input[@name='name_on_card']");
+    private By CardNo = By.xpath("//input[@name='card_number']");
+    private By Cvc = By.xpath("//input[@name='cvc']");
+    private By Expiration = By.xpath("//input[@name='expiry_month']");
+    private By Year = By.xpath("//input[@name='expiry_year']");
+
+    private By ConfirmOrderButton = By.xpath("//button[@type='submit']");
+
+    public void InsertNameCard(String nameCard){
+        driver.findElement(NameOnCard).sendKeys(nameCard);
+    }
+    public void InsertCardNO(String cardNO){
+        driver.findElement(CardNo).sendKeys(cardNO);//----->should be no
+    }
+    public void InsertCvc(String cvc){
+        driver.findElement(Cvc).sendKeys(cvc);//----->should be no
+    }
+    public void InsertExpiration(String exp){
+        driver.findElement(Expiration).sendKeys(exp);//----->should be no
+    }
+    public void InsertYear(String year){
+        driver.findElement(Year).sendKeys(year);//----->should be no
+    }
+    public OrderPlacedPage ClickConfirmOrderButton(){
+        driver.findElement(ConfirmOrderButton).click();
+        return new OrderPlacedPage(driver);
+    }
+}
