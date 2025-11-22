@@ -1,0 +1,75 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class ItemPage {
+    WebDriver driver;
+    public ItemPage(WebDriver driver) {
+        this.driver=driver;
+    }
+    //to check the details of the item
+    private By productName  = By.xpath("//div[@class='product-information']/h2");
+    private By category     = By.xpath("//div[@class='product-information']/p[1]");
+    private By price        = By.xpath("//div[@class='product-information']//span/span");
+    private By qty          = By.id("quantity");
+    private By availability = By.xpath("//b[contains(text(),'Availability')]");
+    private By condition    = By.xpath("//b[contains(text(),'Condition')]");
+    private By brand        = By.xpath("//b[contains(text(),'Brand')]");
+
+    private By ItemQuantity = By.xpath("//input[@value='1']");
+
+    private By AddToCartbutton = By.xpath("//button[@type='button']");
+    private By CartBottun      = By.xpath("//a[@href='/view_cart']");
+
+    //to add review to the item
+    private By AddReview    = By.xpath("//textarea[@name='review']");
+    private By AddName      = By.xpath("//input[@type='text']");
+    private By AddEmail     = By.xpath("//input[@type='email']");
+    private By SubmitButton = By.xpath("//button[@type='submit']");
+    private By ReviewTextAppearrance = By.xpath("//a[@href='#reviews']");
+
+
+    public boolean ChechDetailsVisibilty(){
+        return driver.findElement(productName).isDisplayed()  &&
+                driver.findElement(category).isDisplayed() &&
+                driver.findElement(price).isDisplayed() &&
+                driver.findElement(qty).isDisplayed() &&
+                driver.findElement(availability).isDisplayed() &&
+                driver.findElement(condition).isDisplayed() &&
+                driver.findElement(brand).isDisplayed();
+    }
+
+    public void AddReview (String review){
+        driver.findElement(AddReview).sendKeys(review);
+    }
+    public void Addname (String name){
+        driver.findElement(AddName).sendKeys(name);
+    }
+    public void AddEmail (String email){
+        driver.findElement(AddEmail).sendKeys(email);
+    }
+    public void ClickSubmitButton(){
+        driver.findElement(SubmitButton).click();
+    }
+
+
+    public boolean CheckReveiwAppear(){//tc9
+        String text = driver.findElement(ReviewTextAppearrance).getText();
+        return text.contains("WRITE YOUR REVIEW");
+    }
+
+
+    public void ClickOnAddToCartbutton(){
+        driver.findElement(AddToCartbutton).click();
+    }
+    public CartPage ClickCartBottunLink(){
+        driver.findElement(CartBottun).click();
+        return new CartPage(driver);
+    }
+    public String GetPtoductName(){
+        return driver.findElement(productName).getText();
+    }
+}
