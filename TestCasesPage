@@ -1,0 +1,16 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class TestCasesPage {
+    WebDriver driver;
+    public TestCasesPage(WebDriver driver) {
+        this.driver=driver;
+    }
+    private By TestCasesText = By.xpath("//h2[@class='title text-center']");
+    public boolean CheckTestcaseText(){
+        String actual =driver.findElement(TestCasesText).getText();
+        return actual.contains("Test Cases");
+    }
+}
