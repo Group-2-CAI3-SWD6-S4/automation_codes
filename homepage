@@ -1,0 +1,55 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class HomePage_class {
+    public WebDriver driver;
+
+    public HomePage_class(WebDriver driver) {
+        this.driver = driver;
+    }
+    private By ClickOnLogin = By.xpath("//i[@class='fa fa-home']");//login button
+    private By FirstProduct  = By.xpath("//a[@data-product-id='1']");//add first product
+    private By CartViewLink = By.linkText("view_cart");//link appear when clicking on add item
+    private By CartBottun   = By.xpath("//a[@href='/view_cart']");//cart button
+    private By ProductsLink = By.xpath("//a[@href='/products']");//product button
+
+    private By TestCasesButton = By.xpath("//button[@type='button']");//testcases button
+    private By statescase = By.xpath("//a[@href='/logout']");//tell me if im login or npot
+
+    public boolean chechSiteStatus(String status){
+        String actual = driver.findElement(statescase).getText();
+        return actual.contains(status);
+    }
+
+    public TestCasesPage ClickOnTestCasesButton(){
+        driver.findElement(TestCasesButton).click();
+        return new TestCasesPage(driver);
+    }
+
+
+    public ProductPage ClickOnProductLink(){//tc9
+        driver.findElement(ProductsLink).click();
+        return new ProductPage(driver);
+    }
+
+    public void AddProductOne (){
+        driver.findElement(FirstProduct).click();
+    }
+
+    public void ClickOnCartLink (){
+        driver.findElement(CartViewLink).click();
+    }
+
+    public ProceedToCheckOut ClickOnCartBottun (){
+        driver.findElement(CartBottun).click();
+        return new ProceedToCheckOut(driver);
+    }
+
+    public LoginPage ClickOnLoginButton(){
+        driver.findElement(ClickOnLogin).click();
+        return new LoginPage(driver);
+    }
+}
+
