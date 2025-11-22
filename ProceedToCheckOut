@@ -1,0 +1,22 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ProceedToCheckOut {
+    WebDriver driver ;
+    public ProceedToCheckOut(WebDriver driver) {
+        this.driver=driver;
+    }
+    private By ProceedButton = By.xpath("//a[@class='btn btn-default check_out']");
+    private By RegisterButton = By.linkText("/login");
+
+    public CheckoutPage ClickOnProceedButton(){
+        driver.findElement(ProceedButton).click();
+        return new CheckoutPage(driver);
+    }
+    public void ClickOnRegButton(){
+        driver.findElement(RegisterButton).click();
+    }
+}
