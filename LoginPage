@@ -1,0 +1,33 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class LoginPage {
+    WebDriver driver ;
+    public LoginPage(WebDriver driver) {
+        this.driver=driver;
+    }
+
+    private By newUserText = By.xpath("//div[@class='signup-form']/h2");
+
+
+    private By nametextField  = By.xpath("//input[@data-qa='signup-name']")  ;
+    private By EmailTextField = By.xpath("//input[@data-qa='signup-email']")  ;
+    private By SignUpBottun   = By.xpath("//button[@data-qa='signup-button']");
+
+    public boolean ChechNewUserAppear(){
+        String actual = driver.findElement(newUserText).getText();
+        return actual.contains("New User Signup!");
+    }
+    public void InsertName(String name){
+        driver.findElement(nametextField).sendKeys(name);
+    }
+    public void InsertEmail(String Email){
+        driver.findElement(EmailTextField).sendKeys(Email);
+    }
+    public InformationPage ClickSignButton(){
+        driver.findElement(SignUpBottun).click();
+        return new InformationPage(driver);
+    }
+}
