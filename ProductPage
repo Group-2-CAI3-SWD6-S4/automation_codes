@@ -1,0 +1,100 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class ProductPage {
+    WebDriver driver ;
+    public ProductPage(WebDriver driver) {
+        this.driver=driver;
+    }
+
+    private By SearchTextField       = By.xpath("//input[@name='search']");//el makan ely basearch mno
+    private By SearchBoutton         = By.xpath("//button[@id='submit_search']");
+    private By searchedProductsTitle = By.xpath("//h2[text()='Searched Products']");//"search product" word
+
+    private By AddFirstItem  = By.xpath("//a[@data-product-id='1']");
+    private By AddSecondItem = By.xpath("//a[@data-product-id='2']");
+
+    private By ContinueButton = By.xpath("//button[@data-dismiss='modal']");
+    private By CartBottun   = By.xpath("//a[@href='/view_cart']");
+
+    private By ViewFirstItem = By.xpath("//a[@href='/product_details/1']");
+    private By CenterText   = By.xpath("//div[@class='features_items']/h2");//tc9 used to get the center text
+//    private By SearchedProductText   = By.xpath("//div[@class='features_items']/h2");
+
+
+//    public String returnReviewText(){
+//        return driver.findElement(ReviewTextAppearrance).getText().contains();
+//    }
+
+
+    //    private
+    public boolean CheckAllProductAppear(){//tc9
+        String text = driver.findElement(CenterText).getText();
+        return text.contains("ALL PRODUCTS");
+    }
+    public boolean CheckSearchProductAppear(){//tc9
+        String text = driver.findElement(CenterText).getText();
+        return text.contains("SEARCHED PRODUCTS");
+    }
+
+public ItemPage ClickOnViewItem() {
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+
+    // 1. Remove ads
+    js.executeScript("document.querySelectorAll('iframe[id^=\"aswift\"]').forEach(e => e.remove());");
+
+    // 2. Scroll so products load
+    js.executeScript("window.scrollBy(0, 800);");
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+    // 3. Click the FIRST "View Product" button
+    WebElement viewProduct = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("(//a[contains(text(),'View Product')])[1]")
+            )
+    );
+
+    // 4. Scroll into view
+    js.executeScript("arguments[0].scrollIntoView(true);", viewProduct);
+
+    // 5. Safe click (JS click avoids ads)
+    js.executeScript("arguments[0].click();", viewProduct);
+
+    // 6. Return item page
+    return new ItemPage(driver);
+}
+
+    public void ClickOnFirstItem(){
+        driver.findElement(AddFirstItem).click();
+    };
+
+    public void ClickOnSecondItem(){
+        driver.findElement(AddSecondItem).click();
+    }
+    public void ClickContinueButton(){
+        driver.findElement(ContinueButton).click();
+    }
+    public void ClickCartBottun(){
+        driver.findElement(CartBottun).click();
+    }
+
+
+    public void ClickSearchButton(){
+        driver.findElement(SearchBoutton).click();
+    }
+    public void InsertProduct(String product){
+        driver.findElement(SearchTextField).sendKeys(product);
+    }
+    public boolean isSearchedProductsTitleVisible() {
+        return driver.findElement(searchedProductsTitle).isDisplayed();
+    }
+}
