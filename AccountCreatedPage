@@ -1,0 +1,24 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class AccountCreatedPage {
+    WebDriver driver;
+    public AccountCreatedPage(WebDriver driver) {
+        this.driver=driver;
+    }
+
+    private By ContinueBootun = By.xpath("//a[@data-qa='continue-button']");
+    private By accountCreatedText = By.xpath("//h2[@class='title text-center']");
+
+    public boolean CheckACcountCreated(){
+        String actual = driver.findElement(accountCreatedText).getText();
+        return actual.contains("Account Created!");
+    }
+
+    public HomePage_class ClickcontinueBottun(){
+        driver.findElement(ContinueBootun).click();
+        return new HomePage_class(driver);//homepage
+    }
+}
