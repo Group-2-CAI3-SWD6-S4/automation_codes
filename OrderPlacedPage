@@ -1,0 +1,17 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class OrderPlacedPage {
+    WebDriver driver ;
+    public OrderPlacedPage(WebDriver driver) {
+        this.driver = driver;
+    }
+    private By DownloadInvoiceButton =By.xpath("//a[@class='btn btn-default check_out']");
+
+    public void ClickDownloadInvoiceButton(){
+        driver.findElement(DownloadInvoiceButton).click();
+    }
+}
