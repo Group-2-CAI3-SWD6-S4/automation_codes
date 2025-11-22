@@ -1,0 +1,21 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class CartPage {
+    WebDriver driver ;
+    public CartPage(WebDriver driver) {
+        this.driver=driver;
+    }
+
+    private By qtyForProduct(String productName) {
+        return By.xpath("//h2[text()='" + productName + "']/ancestor::div[@class='product-information']//input[@id='quantity']");
+    }
+
+    public boolean CheckTheQuantityOfAnItem(String productName ,String expected_quantity){
+        String acutal_quantity = driver.findElement(qtyForProduct(productName)).getText();
+        return acutal_quantity==(expected_quantity);
+    }
+
+}
