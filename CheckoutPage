@@ -1,0 +1,23 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class CheckoutPage {
+    WebDriver driver ;
+    public CheckoutPage(WebDriver driver) {
+        this.driver=driver;
+    }
+    private By CommentArea      = By.xpath("//textarea[@name='message']");
+    private By PlaceOrderButton =By.xpath("//a[@class='btn btn-default check_out']");
+
+    public void AddComment(String comment){
+        driver.findElement(CommentArea).sendKeys(comment);
+    }
+
+    public PaymentPage ClickPlaceOrdButton(){
+        driver.findElement(PlaceOrderButton).click();
+        return new PaymentPage (driver);
+    }
+}
