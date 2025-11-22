@@ -1,0 +1,93 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class InformationPage {
+    WebDriver driver ;
+    public InformationPage(WebDriver driver) {
+        this.driver=driver;
+    }
+
+    private By EnterAccountInformationText = By.xpath("//h2[@class='title text-center']");
+    private By Title             = By.xpath("//input[@id='id_gender1']");
+    private By passwordTextField = By.xpath("//input[@type='password']");
+
+    private By days = By.xpath("//select[@id='days']");
+    private By months = By.xpath("//select[@id='months']");
+    private By years = By.xpath("//select[@id='years']");
+    //bruth
+    private By newsletterBottun    = By.xpath("//input[@name='newsletter']");
+    private By specialOffersBottun = By.xpath("//input[@name='optin']");
+
+    private By FirstName = By.xpath("//input[@data-qa='first_name']");
+    private By LastName  = By.xpath("//input[@data-qa='last_name']");
+    private By Company   = By.xpath("//input[@data-qa='company']");
+
+    private By Address1 = By.xpath("//input[@name='address1']");
+    private By Address2 = By.xpath("//input[@name='address2']");
+
+
+    //country
+
+    private By  Zipcode        = By.xpath("//input[@data-qa='zipcode']");
+    private By  City           = By.xpath("//input[@data-qa='city']");
+    private By  State          = By.xpath("//input[@data-qa='state']");
+    private By  MobileNumber   = By.xpath("//input[@data-qa='mobile_number']");
+
+    private By  createaccountBottun   = By.xpath("//button[@data-qa='create-account']");
+
+//    public void chooseDay()
+
+    public void insertAddress1(String address1) {
+        driver.findElement(Address1).sendKeys(address1);
+    }
+    public void insertAddress2(String address2){
+        driver.findElement(Address2).sendKeys(address2);
+    }
+
+    public void insertFisrtName(String fisrtname){
+        driver.findElement(FirstName).sendKeys(fisrtname);
+    }
+    public void insertLastName(String lastname){
+        driver.findElement(LastName).sendKeys(lastname);
+    }
+    public void insertcompany(String company){
+        driver.findElement(Company).sendKeys(company);
+
+    }public void insertCity(String city){
+        driver.findElement(City).sendKeys(city);
+
+    }public void insertState(String state){
+        driver.findElement(State).sendKeys(state);
+    }
+    public void insertZipcode(String zipcode){
+        driver.findElement(Zipcode).sendKeys(String.valueOf(zipcode));
+    }
+    public void insertMobileNo(String mobileNo){
+        driver.findElement(MobileNumber).sendKeys(String.valueOf(mobileNo));
+    }
+
+    public void ChooseTitle(){
+        driver.findElement(Title).click();
+    }
+    public void InsertPassword(String Password){
+        driver.findElement(passwordTextField).sendKeys(Password);
+    }
+    public void ChooseNewSletter(){
+        driver.findElement(newsletterBottun).click();
+    }
+    public void Choosespecialoffers(){
+        driver.findElement(specialOffersBottun).click();
+    }
+    public AccountCreatedPage ClickCreateBottun(){
+        driver.findElement(createaccountBottun).click();
+        return new AccountCreatedPage(driver);
+    }
+
+    public boolean CheckEnterAccountAppear(){
+        String actual =driver.findElement(EnterAccountInformationText).getText();
+        return actual.contains("Enter Account Information");
+    }
+
+}
