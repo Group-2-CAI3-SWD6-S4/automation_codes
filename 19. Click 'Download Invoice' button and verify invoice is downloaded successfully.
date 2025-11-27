@@ -1,0 +1,100 @@
+package Download_Invoice_after_purchase_order_tc;
+
+
+import Pages_pkg.*;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class download_invoice_tc extends base_class {
+    @Test
+    public void download_invoice_testCase(){
+        String username  = "depi";
+        String email     = "Depiiiiii@gmail.com";
+        String FisrtName = "mohamed";
+        String LastName  = "depi";
+        String Fullname  = FisrtName +" " +LastName;
+        String company   = "depi";
+        String Address1  = "ahmed";
+        String Address2  = "fakhry";
+        String Country   = "India";
+        String State     = "nasr city";
+        String City      = "Cairo";
+        String ZipCode   = "12345";
+        String cityStatePostcode= City + " " + State + " " +ZipCode;
+        String MobileNo  = "01010101064";
+
+        homePage.AddProductOne();
+        CartPage cartPage = homePage.clickViewCartFromModal();
+
+            Assert.assertTrue(cartPage.ChechShoppingCartText());
+        cartPage.ClickProceedButton();
+        LoginPage loginPage = cartPage.ClickRegisterLoginButton();
+
+            Assert.assertTrue(loginPage.ChechNewUserAppear());
+        loginPage.InsertName(username);
+        loginPage.InsertEmail(email);
+
+
+        InformationPage informationPage = loginPage.ClickSignButton();
+
+            Assert.assertTrue(informationPage.CheckEnterAccountAppear());
+        informationPage.ChooseTitle();
+        informationPage.InsertPassword("admin123");
+
+        informationPage.chooseDay("3");
+        informationPage.chooseMonth("3");
+        informationPage.chooseYear("2000");
+
+        informationPage.Choosespecialoffers();
+        informationPage.ChooseNewSletter();
+
+        informationPage.insertFisrtName(FisrtName);
+        informationPage.insertLastName(LastName);
+        informationPage.insertcompany(company);
+        informationPage.insertAddress1(Address1);
+        informationPage.insertAddress2(Address2);
+
+        informationPage.chooseCountry(Country);
+
+        informationPage.insertState(State);
+        informationPage.insertCity(City);
+        informationPage.insertZipcode(ZipCode);
+        informationPage.insertMobileNo(MobileNo);
+
+        AccountCreatedPage accountCreatedPage = informationPage.ClickCreateBottun();
+        Assert.assertTrue(accountCreatedPage.CheckACcountCreated());
+        homePage = accountCreatedPage.ClickcontinueBottun();
+
+        Assert.assertTrue(homePage.CheckUserName(username));
+
+        cartPage = homePage.ClickOnCartBottun();
+        CheckoutPage checkoutPage = cartPage.ClickProceedButton();
+
+        Assert.assertTrue(checkoutPage.deliveryAddressContains(Fullname,company,Address1,Address2,cityStatePostcode,Country,MobileNo));
+        Assert.assertTrue(checkoutPage.invoiceAddressContains(Fullname,company,Address1,Address2,cityStatePostcode,Country,MobileNo));
+
+        checkoutPage.AddComment("hello");
+        PaymentPage paymentPage = checkoutPage.ClickPlaceOrdButton();
+
+        paymentPage.InsertNameCard("moahmed");
+        paymentPage.InsertCardNO("11112222333344444");
+        paymentPage.InsertCvc("311");
+        paymentPage.InsertExpiration("12");
+        paymentPage.InsertYear("2000");
+
+        paymentPage.ClickConfirmOrderButton();
+        paymentPage.ChecksuccessfullMsgText();
+
+        paymentPage.ClickDownloadInvoiceButton();
+
+        //--------------
+
+        paymentPage.ClickContinueButton();
+
+        checkoutPage.ClickDeleteButton();
+        Assert.assertTrue(checkoutPage.CheckaccountDeletedText());
+
+    }
+
+}
