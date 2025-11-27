@@ -1,0 +1,17 @@
+package VerifySubscriptioninhomepage_pkg;
+
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class VerifySubscriptioninhomepage extends base_class {
+    @Test
+    public void VerifySubscriptioninhomepage_tc(){
+        homePage.scrollDownUntilSubscriptionVisible();
+        homePage.InsertEmail("mohamed@gmail.com");
+        homePage.ClickSubmitButton();
+
+        Assert.assertTrue(homePage.isSuccessfullySubscribedVisible());
+
+    }
+}
