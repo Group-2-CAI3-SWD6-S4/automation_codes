@@ -1,0 +1,74 @@
+package addressdetailsincheckoutpageVerifyaddressdetailsincheckoutpage_pkg;
+
+import Pages_pkg.*;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class addressdetailsincheckoutpageVerifyaddressdetailsincheckoutpage extends base_class {
+    @Test
+    public void addressdetailsincheckoutpageVerifyaddressdetailsincheckoutpage_tc(){
+        LoginPage loginPage = homePage.ClickOnLoginButton();
+
+        String username  = "depi";
+        String email     = "Depiiiiii@gmail.com";
+        String FisrtName = "mohamed";
+        String LastName  = "depi";
+        String Fullname  = FisrtName +" " +LastName;
+        String company   = "depi";
+        String Address1  = "ahmed";
+        String Address2  = "fakhry";
+        String Country   = "India";
+        String State     = "nasr city";
+        String City      = "Cairo";
+        String ZipCode   = "12345";
+        String cityStatePostcode= City + " " + State + " " +ZipCode;
+        String MobileNo  = "01010101064";
+
+            Assert.assertTrue(loginPage.ChechNewUserAppear());
+        loginPage.InsertEmail(email);
+        loginPage.InsertName(username);
+
+        InformationPage informationPage =loginPage.ClickSignButton();
+            Assert.assertTrue(informationPage.CheckEnterAccountAppear());
+        informationPage.ChooseTitle();
+        informationPage.InsertPassword("admin123");
+
+        informationPage.chooseDay("3");
+        informationPage.chooseMonth("3");
+        informationPage.chooseYear("2000");
+
+        informationPage.Choosespecialoffers();
+        informationPage.ChooseNewSletter();
+
+        informationPage.insertFisrtName(FisrtName);
+        informationPage.insertLastName(LastName);
+        informationPage.insertcompany(company);
+        informationPage.insertAddress1(Address1);
+        informationPage.insertAddress2(Address2);
+
+        informationPage.chooseCountry(Country);
+
+        informationPage.insertState(State);
+        informationPage.insertCity(City);
+        informationPage.insertZipcode(ZipCode);
+        informationPage.insertMobileNo(MobileNo);
+
+        AccountCreatedPage accountCreatedPage = informationPage.ClickCreateBottun();
+            Assert.assertTrue(accountCreatedPage.CheckACcountCreated());
+        homePage = accountCreatedPage.ClickcontinueBottun();
+
+            Assert.assertTrue(homePage.CheckUserName(username));
+        homePage.AddProductOne();
+
+        CartPage cartPage = homePage.ClickOnCartLink();
+            Assert.assertTrue(cartPage.ChechShoppingCartText());
+
+        CheckoutPage checkoutPage= cartPage.ClickProceedButton();
+        Assert.assertTrue(checkoutPage.deliveryAddressContains(Fullname,company,Address1,Address2,cityStatePostcode,Country,MobileNo));
+        Assert.assertTrue(checkoutPage.invoiceAddressContains(Fullname,company,Address1,Address2,cityStatePostcode,Country,MobileNo));
+
+        checkoutPage.ClickDeleteButton();
+
+    }
+}
