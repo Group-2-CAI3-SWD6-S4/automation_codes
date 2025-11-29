@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 public class ScrollWithArrow extends base_class {
     @Test
     public void ScrollWithArrow_tc(){
+//verify homepage is displayed
+        boolean isHomeVisible = homePage.verifyHomePage();
+        Assert.assertTrue(isHomeVisible, "Home page is not visible!");
         homePage.ScrollDownToBottom();
         Assert.assertTrue(homePage.isSubscriptionVisible());
         homePage.ScrollUpToTop();
