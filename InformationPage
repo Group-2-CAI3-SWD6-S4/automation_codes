@@ -1,7 +1,9 @@
 package Pages_pkg;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 
 public class InformationPage {
     WebDriver driver ;
@@ -28,7 +30,7 @@ public class InformationPage {
     private By Address2 = By.xpath("//input[@name='address2']");
 
 
-    //country
+    private By countries =By.xpath("//select[@id='country']");
 
     private By  Zipcode        = By.xpath("//input[@data-qa='zipcode']");
     private By  City           = By.xpath("//input[@data-qa='city']");
@@ -37,7 +39,22 @@ public class InformationPage {
 
     private By  createaccountBottun   = By.xpath("//button[@data-qa='create-account']");
 
-//    public void chooseDay()
+    public void chooseDay(String day){
+        Select select = new Select(driver.findElement(days));
+        select.selectByValue(day); // pass variable here too
+    }
+    public void chooseMonth(String month){
+        Select select = new Select(driver.findElement(months));
+        select.selectByValue(month); // pass variable here too
+    }
+    public void chooseYear(String year){
+        Select select = new Select(driver.findElement(years));
+        select.selectByValue(year); // pass variable here too
+    }
+    public void chooseCountry(String country){
+        Select select = new Select(driver.findElement(countries));
+        select.selectByValue(country); // pass variable here too
+    }
 
     public void insertAddress1(String address1) {
         driver.findElement(Address1).sendKeys(address1);
@@ -69,6 +86,8 @@ public class InformationPage {
     }
 
     public void ChooseTitle(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.querySelectorAll('iframe[id^=\"aswift\"]').forEach(e => e.remove());");
         driver.findElement(Title).click();
     }
     public void InsertPassword(String Password){
@@ -78,6 +97,8 @@ public class InformationPage {
         driver.findElement(newsletterBottun).click();
     }
     public void Choosespecialoffers(){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.querySelectorAll('iframe[id^=\"aswift\"]').forEach(e => e.remove());");
         driver.findElement(specialOffersBottun).click();
     }
     public AccountCreatedPage ClickCreateBottun(){
@@ -87,7 +108,7 @@ public class InformationPage {
 
     public boolean CheckEnterAccountAppear(){
         String actual =driver.findElement(EnterAccountInformationText).getText();
-        return actual.contains("Enter Account Information");
+        return actual.contains("ENTER ACCOUNT INFORMATION");
     }
 
 }
