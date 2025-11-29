@@ -9,6 +9,9 @@ public class AddtocartfromRecommendeditems extends base_class {
 
     @Test
     public void verifyRecommendedItemsAndAddToCart() throws InterruptedException {
+//verify homepage is displayed
+        boolean isHomeVisible = homePage.verifyHomePage();
+        Assert.assertTrue(isHomeVisible, "Home page is not visible!");
 
         homePage.scrollToRecommendedItems();
 
