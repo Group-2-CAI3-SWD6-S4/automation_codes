@@ -4,6 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ItemPage {
     WebDriver driver;
@@ -19,7 +23,7 @@ public class ItemPage {
     private By condition    = By.xpath("//b[contains(text(),'Condition')]");
     private By brand        = By.xpath("//b[contains(text(),'Brand')]");
 
-    private By ItemQuantity = By.xpath("//input[@value='1']");
+    private By ItemQuantity = By.xpath("//input[@name='quantity']");
 
     private By AddToCartbutton = By.xpath("//button[@type='button']");
     private By CartBottun      = By.xpath("//a[@href='/view_cart']");
@@ -30,6 +34,22 @@ public class ItemPage {
     private By AddEmail     = By.xpath("//input[@type='email']");
     private By SubmitButton = By.xpath("//button[@type='submit']");
     private By ReviewTextAppearrance = By.xpath("//a[@href='#reviews']");
+    private By viewCartInModal = By.xpath("//p[@class='text-center']//a[@href='/view_cart']");
+
+    public CartPage clickViewCartFromModal() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement modalViewCart = wait.until(ExpectedConditions.elementToBeClickable(viewCartInModal));
+        modalViewCart.click();
+        return new CartPage(driver);
+    }
+
+    public void increaseQuantity(int times) {
+        WebElement qty = driver.findElement(ItemQuantity);
+        for (int i = 0; i < times; i++) {
+            qty.sendKeys(Keys.ARROW_UP);
+        }
+    }
+
 
 
     public boolean ChechDetailsVisibilty(){
