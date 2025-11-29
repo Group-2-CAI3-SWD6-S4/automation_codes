@@ -1,0 +1,64 @@
+package Pages_pkg;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class ContactUsPage {
+    WebDriver driver;
+    public ContactUsPage(WebDriver driver) {
+        this.driver=driver;
+    }
+    //text fields locators
+    private By NameTextField    = By.xpath("//input[@name='name']");
+    private By EmailTextField   = By.xpath("//input[@name='email']");
+    private By SubjectTextField = By.xpath("//input[@name='subject']");
+    private By MessageTextField = By.xpath("//textarea[@name='message']");
+
+    //buttons locators
+    private By SubmitButton     = By.xpath("//input[@name='submit']");
+    private By HomeButton       = By.xpath("//a[@href='/']");
+
+    //texts locators
+    private By GetInTouchText   = By.xpath("//h2[@class='title text-center']");
+    private By successMsg       = By.xpath("//div[@class='status alert alert-success']");
+
+    public void acceptAlert(){
+        driver.switchTo().alert().accept();
+    }
+    //texts methods
+    public boolean GetInTouchTextIsvisible(){
+        return driver.findElement(GetInTouchText).isDisplayed();
+    }
+    public boolean successMsgTextIsvisible(){
+        return driver.findElement(successMsg).isDisplayed();
+    }
+    //text fields methods
+    public void InsertName(String name){
+        driver.findElement(NameTextField).sendKeys(name);
+    }
+    public void InsertEmail(String email){
+        driver.findElement(EmailTextField).sendKeys(email);
+    }
+    public void InsertMessage(String message){
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.querySelectorAll('iframe[id^=\"aswift\"]').forEach(e => e.remove());");
+        WebElement messagee = driver.findElement(MessageTextField);
+        js.executeScript("arguments[0].scrollIntoView(true);", messagee);
+
+        driver.findElement(MessageTextField).sendKeys(message);
+    }
+
+    public void InserSubject(String subject){
+        driver.findElement(SubjectTextField).sendKeys(subject);
+    }
+    //buttons methods
+    public void ClickSubmitButton(){
+        driver.findElement(SubmitButton).click();
+    }
+    public HomePage_class ClickHomeButton(){
+        driver.findElement(HomeButton).click();
+        return new HomePage_class((driver));
+    }
+}
