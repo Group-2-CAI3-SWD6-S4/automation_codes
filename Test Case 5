@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 public class RegisterUserwithexistingemail extends base_class {
     @Test
     public void RegisterUserwithexistingemail_tc(){
+//verify homepage is displayed
+        boolean isHomeVisible = homePage.verifyHomePage();
+        Assert.assertTrue(isHomeVisible, "Home page is not visible!");
         String email    = "Depiiiii@gmail.com";
         LoginPage loginPage = homePage.ClickOnLoginButton();
         Assert.assertTrue(loginPage.CheckLoginText());
