@@ -1,0 +1,24 @@
+package VerifyProductQuantity_tc;
+
+import Pages_pkg.CartPage;
+import Pages_pkg.ItemPage;
+import Pages_pkg.ProductPage;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class verifyQuantity_tc extends base_class {
+    @Test
+    public void verifyQuantity_tc(){
+        ProductPage productPage = homePage.ClickOnProductLink();
+        ItemPage itemPage = productPage.ClickOnViewItem();
+        Assert.assertTrue(itemPage.ChechDetailsVisibilty());
+        String ItemNameitem = itemPage.GetPtoductName();
+        int Quantity = 4;
+        itemPage.increaseQuantity(Quantity);
+        itemPage.ClickOnAddToCartbutton();
+        CartPage cartPage = itemPage.clickViewCartFromModal();
+        Assert.assertTrue(cartPage.ChechShoppingCartTextIsVisible());
+        Assert.assertEquals(cartPage.getQuantity(),(Quantity+1));
+    }
+}
