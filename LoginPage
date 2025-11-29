@@ -12,19 +12,48 @@ public class LoginPage {
     private By newUserText = By.xpath("//div[@class='signup-form']/h2");
 
 
-    private By nametextField  = By.xpath("//input[@data-qa='signup-name']")  ;
-    private By EmailTextField = By.xpath("//input[@data-qa='signup-email']")  ;
-    private By SignUpBottun   = By.xpath("//button[@data-qa='signup-button']");
+    private By SignUpname  = By.xpath("//input[@data-qa='signup-name']")  ;
+    private By SignUpEmail = By.xpath("//input[@data-qa='signup-email']")  ;
 
+    private By SignUpBottun   = By.xpath("//button[@data-qa='signup-button']");
+    private By LoginButton    = By.xpath("//button[@data-qa='login-button']");
+
+    private By LoginEmail    = By.xpath("//input[@data-qa='login-email']");
+    private By LoginPassword = By.xpath("//input[@data-qa='login-password']");
+
+    private By LoginText             = By.xpath("//h2[contains(text(),'Login to your account')]");
+    private By IncorrectPasswordText = By.xpath("//P[contains(text(),'Your email or password is incorrect!')]");
+    private By existingEmailText     = By.xpath("//P[contains(text(),'Email Address already exist!')]");
+
+    public boolean CheckLoginText(){
+        String actual = driver.findElement(LoginText).getText();
+        return actual.contains("Login to your account");
+    }
+    public boolean IncorrectPasswordTextIsVisible(){
+        return driver.findElement(IncorrectPasswordText).isDisplayed();
+    }
+    public boolean existingEmailTextIsVisible(){
+        return driver.findElement(existingEmailText).isDisplayed();
+    }
     public boolean ChechNewUserAppear(){
         String actual = driver.findElement(newUserText).getText();
         return actual.contains("New User Signup!");
     }
     public void InsertName(String name){
-        driver.findElement(nametextField).sendKeys(name);
+        driver.findElement(SignUpname).sendKeys(name);
     }
     public void InsertEmail(String Email){
-        driver.findElement(EmailTextField).sendKeys(Email);
+        driver.findElement(SignUpEmail).sendKeys(Email);
+    }
+    public void InsertLoginEmail(String email){
+        driver.findElement(LoginEmail).sendKeys(email);
+    }
+    public void InsertLoginPassword(String password){
+        driver.findElement(LoginPassword).sendKeys(password);
+    }
+    public HomePage_class ClickLoginButton(){
+        driver.findElement(LoginButton).click();
+        return new HomePage_class(driver);
     }
     public InformationPage ClickSignButton(){
         driver.findElement(SignUpBottun).click();
