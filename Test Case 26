@@ -1,0 +1,15 @@
+package scrollWithoutArrow;
+
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class ScrollWithArrow extends base_class {
+    @Test
+    public void ScrollWithArrow_tc(){
+        homePage.ScrollDownToBottom();
+        Assert.assertTrue(homePage.isSubscriptionVisible());
+        homePage.ScrollUpToTop();
+        Assert.assertTrue(homePage.isFullFledgedTextVisible());
+    }
+}
