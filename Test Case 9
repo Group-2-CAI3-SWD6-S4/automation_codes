@@ -1,0 +1,21 @@
+package search_product_tc_9;
+
+import Pages_pkg.ProductPage;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class SearchProduct_tc extends base_class {
+    @Test
+    public void SearchProduct(){
+        ProductPage productPage = homePage.ClickOnProductLink();
+        Assert.assertTrue(productPage.CheckAllProductAppear());
+        productPage.InsertProduct("b");
+        productPage.ClickSearchButton();
+        Assert.assertTrue(productPage.CheckSearchProductAppear());
+        Assert.assertTrue(productPage.isSearchedProductsTitleVisible());
+        Assert.assertTrue(productPage.verifyProductsContain("b"));
+
+    }
+
+}
