@@ -2,20 +2,21 @@ package Pages_pkg;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class PaymentPage {
     WebDriver driver;
     public PaymentPage(WebDriver driver) {
         this.driver=driver;
     }
-    private By NameOnCard = By.xpath("//input[@name='name_on_card']");
-    private By CardNo = By.xpath("//input[@name='card_number']");
-    private By Cvc = By.xpath("//input[@name='cvc']");
-    private By Expiration = By.xpath("//input[@name='expiry_month']");
-    private By Year = By.xpath("//input[@name='expiry_year']");
+    private By NameOnCard         = By.xpath("//input[@name='name_on_card']");
+    private By CardNo             = By.xpath("//input[@name='card_number']");
+    private By Cvc                = By.xpath("//input[@name='cvc']");
+    private By Expiration         = By.xpath("//input[@name='expiry_month']");
+    private By Year               = By.xpath("//input[@name='expiry_year']");
+    private By successfullMsgText = By.xpath("//div[@class='alert-success alert']") ;
 
     private By ConfirmOrderButton = By.xpath("//button[@type='submit']");
+    private By ContinueButton     = By.xpath("//a[@class='btn btn-primary']");
 
     public void InsertNameCard(String nameCard){
         driver.findElement(NameOnCard).sendKeys(nameCard);
@@ -32,8 +33,21 @@ public class PaymentPage {
     public void InsertYear(String year){
         driver.findElement(Year).sendKeys(year);//----->should be no
     }
+    private By DownloadInvoiceButton =By.xpath("//a[@class='btn btn-default check_out']");
+
+    public void ClickDownloadInvoiceButton(){
+        driver.findElement(DownloadInvoiceButton).click();
+    }
     public OrderPlacedPage ClickConfirmOrderButton(){
         driver.findElement(ConfirmOrderButton).click();
         return new OrderPlacedPage(driver);
+    }
+    public boolean ChecksuccessfullMsgText(){
+        String actual = driver.findElement(successfullMsgText).getText();
+        return actual.contains("Your order has been placed successfully!");
+    }
+    public void ClickContinueButton(){
+        driver.findElement(ContinueButton).click();
+
     }
 }
