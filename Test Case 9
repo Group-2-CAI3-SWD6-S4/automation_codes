@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 public class SearchProduct_tc extends base_class {
     @Test
     public void SearchProduct(){
+//verify homepage is displayed
+        boolean isHomeVisible = homePage.verifyHomePage();
+        Assert.assertTrue(isHomeVisible, "Home page is not visible!");
         ProductPage productPage = homePage.ClickOnProductLink();
         Assert.assertTrue(productPage.CheckAllProductAppear());
         productPage.InsertProduct("b");
