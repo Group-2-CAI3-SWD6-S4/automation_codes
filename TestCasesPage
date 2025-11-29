@@ -8,7 +8,9 @@ public class TestCasesPage {
     public TestCasesPage(WebDriver driver) {
         this.driver=driver;
     }
+
     private By TestCasesText = By.xpath("//h2[@class='title text-center']");
+
     public boolean CheckTestcaseText(){
         String actual =driver.findElement(TestCasesText).getText();
         return actual.contains("Test Cases");
