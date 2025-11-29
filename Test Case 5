@@ -1,0 +1,19 @@
+package RegisterUserwithexistingemail_pkg;
+
+import Pages_pkg.LoginPage;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class RegisterUserwithexistingemail extends base_class {
+    @Test
+    public void RegisterUserwithexistingemail_tc(){
+        String email    = "Depiiiii@gmail.com";
+        LoginPage loginPage = homePage.ClickOnLoginButton();
+        Assert.assertTrue(loginPage.CheckLoginText());
+        loginPage.InsertName("mohamed");
+        loginPage.InsertEmail(email);
+        loginPage.ClickSignButton();
+        Assert.assertTrue(loginPage.existingEmailTextIsVisible());
+    }
+}
