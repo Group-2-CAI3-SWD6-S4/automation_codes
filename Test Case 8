@@ -1,0 +1,18 @@
+package VerifyProductDetails_pkg;
+
+import Pages_pkg.ItemPage;
+import Pages_pkg.ProductPage;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class VerifyProductDetails extends base_class {
+    @Test
+    public void VerifyProductDetails_tc(){
+        ProductPage productPage =homePage.ClickOnProductLink();
+        productPage.CheckAllProductAppear();
+        ItemPage itemPage = productPage.ClickOnViewItem();
+        Assert.assertTrue(itemPage.ChechDetailsVisibilty());
+
+    }
+}
