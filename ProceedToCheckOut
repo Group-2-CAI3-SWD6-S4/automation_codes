@@ -9,7 +9,7 @@ public class ProceedToCheckOut {
     public ProceedToCheckOut(WebDriver driver) {
         this.driver=driver;
     }
-    private By ProceedButton = By.xpath("//a[@class='btn btn-default check_out']");
+    private By ProceedButton  = By.xpath("//a[@class='btn btn-default check_out']");
     private By RegisterButton = By.linkText("/login");
 
     public CheckoutPage ClickOnProceedButton(){
@@ -18,5 +18,6 @@ public class ProceedToCheckOut {
     }
     public void ClickOnRegButton(){
         driver.findElement(RegisterButton).click();
+
     }
 }
