@@ -1,13 +1,11 @@
 package Pages_pkg;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class ProductPage {
     WebDriver driver ;
@@ -19,20 +17,120 @@ public class ProductPage {
     private By SearchBoutton         = By.xpath("//button[@id='submit_search']");
     private By searchedProductsTitle = By.xpath("//h2[text()='Searched Products']");//"search product" word
 
-    private By AddFirstItem  = By.xpath("//a[@data-product-id='1']");
-    private By AddSecondItem = By.xpath("//a[@data-product-id='2']");
+    private By firstProduct  = By.xpath("//a[@data-product-id='1']");
+    private By secondproduct = By.xpath("//a[@data-product-id='2']");
 
     private By ContinueButton = By.xpath("//button[@data-dismiss='modal']");
-    private By CartBottun   = By.xpath("//a[@href='/view_cart']");
+    private By CartBottun     = By.xpath("//a[@href='/view_cart']");
 
-    private By ViewFirstItem = By.xpath("//a[@href='/product_details/1']");
     private By CenterText   = By.xpath("//div[@class='features_items']/h2");//tc9 used to get the center text
-//    private By SearchedProductText   = By.xpath("//div[@class='features_items']/h2");
+
+    private By productTitles = By.xpath("//div[@class='productinfo text-center']/p");
+    private By addToCartButtons = By.xpath("//div[@class='productinfo text-center']//a[contains(text(),'Add to cart')]");
+    private By continueShoppingBtn = By.xpath("//button[contains(text(),'Continue Shopping')]");
+
+    public String GetProductOneId(){
+        String id = driver.findElement(firstProduct).getAttribute("data-product-id");
+        return id;
+    }
+    public String GetProductTwoId(){
+        String id = driver.findElement(secondproduct).getAttribute("data-product-id");
+        return id;
+    }
 
 
-//    public String returnReviewText(){
-//        return driver.findElement(ReviewTextAppearrance).getText().contains();
-//    }
+    public boolean verifyProductsContain(String keyword) {
+        List<WebElement> products = driver.findElements(productTitles);
+
+        for (WebElement product : products) {
+            String name = product.getText().toLowerCase();
+            if (!name.contains(keyword.toLowerCase())) {
+                return false; // some product does NOT match
+            }
+        }
+
+        return true; // all products matched
+    }
+
+
+    public void addAllProductsToCart() {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // remove ad iframes
+        js.executeScript("document.querySelectorAll('iframe[id^=\"aswift\"]').forEach(e => e.remove());");
+
+        List<WebElement> addButtons = driver.findElements(addToCartButtons);
+
+        for (WebElement btn : addButtons) {
+
+            // scroll to button to avoid overlay issues
+            js.executeScript("arguments[0].scrollIntoView(true);", btn);
+
+            // click Add to cart
+            btn.click();
+
+            // wait for popup to appear
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("cartModal")));
+
+            // click Continue Shopping
+            wait.until(ExpectedConditions.elementToBeClickable(continueShoppingBtn)).click();
+
+            // wait for popup to disappear
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("cartModal")));
+        }
+    }
+
+
+
+
+    // Locator for the second product name
+
+    By secondProductNameLocator = By.xpath("(//div[@class='product-image-wrapper'])[2]//p");
+    By secondProductLocator      = By.xpath("(//div[@class='product-image-wrapper'])[2]");
+
+
+    // Get the name and save it in a string
+    public String getSecondProductName() {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // 1. Remove sticky banner ads
+        js.executeScript(
+                "document.querySelectorAll('*').forEach(el => {" +
+                        "  const s = getComputedStyle(el);" +
+                        "  if (s.position === 'fixed' && parseInt(s.bottom) === 0) el.remove();" +
+                        "});"
+        );
+
+        // Remove iframe ads + any element with 'ad' in id/class
+        js.executeScript(
+                "document.querySelectorAll('iframe, [id*=\"ad\"], [class*=\"ad\"]').forEach(e => e.remove());"
+        );
+
+        // 2. Scroll to load products
+        js.executeScript("window.scrollBy(0, 200);");
+        js.executeScript("window.scrollBy(0, 100);");
+
+        // 3. Wait for 2nd product name to appear
+        WebElement productName = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(secondProductNameLocator)
+        );
+
+        // 4. Scroll into view
+        js.executeScript("arguments[0].scrollIntoView(true);", productName);
+
+        // 5. Click the product safely with JS
+        WebElement productToClick = wait.until(
+                ExpectedConditions.elementToBeClickable(secondProductLocator)
+        );
+        js.executeScript("arguments[0].click();", productToClick);
+
+        // 6. Return its name
+        return productName.getText();
+    }
 
 
     //    private
@@ -74,17 +172,18 @@ public ItemPage ClickOnViewItem() {
 }
 
     public void ClickOnFirstItem(){
-        driver.findElement(AddFirstItem).click();
+        driver.findElement(firstProduct).click();
     };
 
     public void ClickOnSecondItem(){
-        driver.findElement(AddSecondItem).click();
+        driver.findElement(secondproduct).click();
     }
     public void ClickContinueButton(){
         driver.findElement(ContinueButton).click();
     }
-    public void ClickCartBottun(){
+    public CartPage ClickCartBottun(){
         driver.findElement(CartBottun).click();
+        return new CartPage(driver);
     }
 
 
