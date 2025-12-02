@@ -18,6 +18,18 @@ public class PaymentPage {
     private By ConfirmOrderButton = By.xpath("//button[@type='submit']");
     private By ContinueButton     = By.xpath("//a[@class='btn btn-primary']");
 
+
+    private By nameOnCardBox = By.name("name_on_card");
+    private By cardNumberBox = By.name("card_number");
+    private By cvcBox = By.name("cvc");
+    private By expirationMonthBox = By.name("expiry_month");
+    private By expirationYearBox = By.name("expiry_year");
+    private By payConfirmOrderButton = By.id("submit");
+    private By paymentSuccessMessage = By.xpath("//p[contains(text(),'Congratulations! Your order has been confirmed!')]");
+    private By deleteAccountButton = By.linkText("Delete Account");
+
+
+
     public void InsertNameCard(String nameCard){
         driver.findElement(NameOnCard).sendKeys(nameCard);
     }
@@ -49,5 +61,34 @@ public class PaymentPage {
     public void ClickContinueButton(){
         driver.findElement(ContinueButton).click();
 
+    }
+
+
+    //Actions
+    public void insertNameOnCard(String nameOnCard){
+        driver.findElement(nameOnCardBox).sendKeys(nameOnCard);
+    }
+    public void insertCardNumber(String cardNumber){
+        driver.findElement(cardNumberBox).sendKeys(cardNumber);
+    }
+    public void insertCvcBox(String CVC){
+        driver.findElement(cvcBox).sendKeys(CVC);
+    }
+    public void insertExpiratonMonth(String  expirationMonth){
+        driver.findElement(expirationMonthBox).sendKeys(expirationMonth);
+    }
+    public void insertExpirationYear(String expirationYear){
+        driver.findElement(expirationYearBox).sendKeys(expirationYear);
+    }
+    public void clickConfirmOrderButton(){
+        driver.findElement(payConfirmOrderButton).click();
+    }
+    public String getPaymentsuccessMessage(){
+        String message = driver.findElement(paymentSuccessMessage).getText();
+        return message;
+    }
+    public Pages.DeletePage clickDeleteAccount(){
+        driver.findElement(deleteAccountButton).click();
+        return new Pages.DeletePage(driver);
     }
 }
