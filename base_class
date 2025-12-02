@@ -1,6 +1,6 @@
 package base_pkg;
 
-import Pages_pkg.HomePage_class;
+import Pages_pkg.HomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterSuite;
@@ -8,14 +8,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 public class base_class {
-    public HomePage_class homePage;
+    public HomePage homePage;
     public WebDriver      driver  ;
 
     @BeforeSuite
     public void setup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        homePage = new HomePage_class(driver);
+        homePage = new HomePage(driver);
         gohome();
     }
 
@@ -29,3 +29,4 @@ public class base_class {
         driver.quit();
     }
 }
+
