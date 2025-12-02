@@ -1,0 +1,86 @@
+package steps_def;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+public class tc_1_steps {
+    WebDriver driver;
+    @Given("user launches the browser and user navigates to {string} and home page is visible successfully")
+    public void user_launches_the_browser_and_user_navigates_to_and_home_page_is_visible_successfully(String string) {
+
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("http://automationexercise.com");
+    }
+    @When("user clicks on {string} button")
+    public void user_clicks_on_button(String string) {
+        driver.findElement(By.linkText("Signup / Login")).click();
+
+    }
+    @Then("{string} section is visible")
+    public void section_is_visible(String string) {
+
+
+    }
+    @When("user enters name and email address and user clicks on {string} button")
+    public void user_enters_name_and_email_address_and_user_clicks_on_button(String string) {
+        String name = "mariam ibrahim";
+        String email = "mi1695633@gmail.com";
+
+        driver.findElement(By.name("name")).sendKeys(name);
+        driver.findElement(By.name("email")).sendKeys(email);
+        driver.findElement(By.xpath("//*[@id=\"form\"]/div[1]/div/div[3]/div/form/button")).click();
+    }
+    @When("user fills account details including Title, Name, Email, Password, and Date of Birth and user selects {string} checkbox and user selects {string} checkbox and user fills address details including First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, and Mobile Number and user clicks on {string} button")
+    public void user_fills_account_details_including_title_name_email_password_and_date_of_birth_and_user_selects_checkbox_and_user_selects_checkbox_and_user_fills_address_details_including_first_name_last_name_company_address_address2_country_state_city_zipcode_and_mobile_number_and_user_clicks_on_button(String string, String string2, String string3) {
+        String name = "mariam ibrahim";
+        String email = "mi1695633@gmail.com";
+        string password="123456";
+        driver.findElement(By.linkText("Mrs")).click();
+        driver.findElement(By.name("name")).sendKeys(name);
+        driver.findElement(By.name("email")).sendKeys(email);
+        driver.findElement(By.xpath("//*[@id=\"form\"]/div[1]/div/div/div/form/div[4]/label")).sendKeys(password);
+
+        Select months=new;
+        Select(driver.findElement(By.id("months")));
+        months.selectByVisibleText("February");
+
+        Select years=new;
+        Select(driver.findElement(By.id("years")));
+        years.selectByVisibleText("2005");
+        driver.findElement(By.xpath("//*[@id=\"form\"]/div[1]/div/div/div/form/div[6]/label")).click();
+        driver.findElement(By.id("first_name")).sendKeys("mariam");
+        driver.findElement(By.id("last_name")).sendKeys("ibrahim");
+        driver.findElement(By.id("company")).sendKeys("cairo");
+        driver.findElement(By.id("address1")).sendKeys("maadi");
+        driver.findElement(By.id("address2")).sendKeys("helwan");
+        Select country=new;
+        Select(driver.findElement(By.id("country")));
+        country.selectByVisibleText("United States");
+        driver.findElement(By.id("state")).sendKeys("Egypt");
+        driver.findElement(By.id("city")).sendKeys("Cairo");
+        driver.findElement(By.id("zipcode")).sendKeys("11511");
+        driver.findElement(By.id("mobile_number")).sendKeys("01155208820");
+        driver.findElement(By.xpath("//*[@id=\"form\"]/div[1]/div/div/div/form/button")).click();
+
+
+
+    }
+    @Then("{string} message is visible")
+    public void message_is_visible(String string) {
+        String acualResult=driver.findElement(By.xpath("//*[@id=\"form\"]/div/div/div/h2/b")).getText();
+        String exepectedResult="Account Created!";
+        Assert.assertTrue(acualResult.contains(exepectedResult));
+        driver.quit();
+
+    }
+
+
+}
