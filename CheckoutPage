@@ -2,18 +2,123 @@ package Pages_pkg;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class CheckoutPage {
     WebDriver driver ;
     public CheckoutPage(WebDriver driver) {
         this.driver=driver;
     }
-    private By CommentArea      = By.xpath("//textarea[@name='message']");
-    private By PlaceOrderButton =By.xpath("//a[@class='btn btn-default check_out']");
+    private By CommentAreaTextField = By.xpath("//textarea[@name='message']");
+    private By accountDeletedText   = By.xpath("//h2[@class='title text-center']");
+    private By DeleteButton         = By.xpath("//a[@href='/delete_account']");
+    private By PlaceOrderButton     = By.xpath("//a[@class='btn btn-default check_out']");
+
+
+    private By invoiceFullName =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_firstname') and contains(@class,'address_lastname')]");
+
+    private By invoiceCompany =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_address1')][1]");
+
+    private By invoiceAddressLine1 =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_address1')][2]");
+
+    private By invoiceAddressLine2 =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_address1')][3]");
+
+    private By invoiceCityStatePostcode =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_city') and contains(@class,'address_state_name') and contains(@class,'address_postcode')]");
+
+    private By invoiceCountry =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_country_name')]");
+
+    private By invoicePhone =
+            By.xpath("//ul[@id='address_invoice']//li[contains(@class,'address_phone')]");
+
+
+    private By deliveryFullName =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_firstname') and contains(@class,'address_lastname')]");
+
+    private By deliveryCampany =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_address1')][1]");
+
+    private By deliveryAddressLine1 =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_address1')][2]");
+
+    private By deliveryAddressLine2 =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_address1')][3]");
+
+    private By deliveryCityStatePostcode =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_city') and contains(@class,'address_state_name') and contains(@class,'address_postcode')]");
+
+    private By deliveryCountry =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_country_name')]");
+
+    private By deliveryPhone =
+            By.xpath("//ul[@id='address_delivery']//li[contains(@class,'address_phone')]");
+
+    public boolean CheckAccountDeletedText(){
+        String actual = driver.findElement(accountDeletedText).getText();
+        return actual.contains("ACCOUNT DELETED!");
+    }
+
+
+    public boolean deliveryAddressContains(String fullName,
+                                           String company,
+                                           String address1,
+                                           String address2,
+                                           String cityStatePostcode,
+                                           String country,
+                                           String phone) {
+
+        String actualCityStatePostcode = driver.findElement(deliveryCityStatePostcode).getText();
+        String actualFullName = driver.findElement(deliveryFullName).getText();
+        String actualAddress1 = driver.findElement(deliveryCampany).getText();
+        String actualAddress2 = driver.findElement(deliveryAddressLine1).getText();
+        String actualAddress3 = driver.findElement(deliveryAddressLine2).getText();
+        String actualCountry  = driver.findElement(deliveryCountry).getText();
+        String actualPhone    = driver.findElement(deliveryPhone).getText();
+
+        return actualFullName.contains(fullName)
+                && actualAddress1.contains(company)
+                && actualAddress2.contains(address1)
+                && actualAddress3.contains(address2)
+                && actualCityStatePostcode.contains(cityStatePostcode)
+                && actualCountry.contains(country)
+                && actualPhone.contains(phone);
+    }
+
+    public boolean invoiceAddressContains(String fullName,
+                                          String company,
+                                          String address1,
+                                          String address2,
+                                          String cityStatePostcode,
+                                          String country,
+                                          String phone) {
+
+        String actualCityStatePostcode = driver.findElement(invoiceCityStatePostcode).getText();
+        String actualFullName = driver.findElement(invoiceFullName).getText();
+        String actualAddress1 = driver.findElement(invoiceCompany).getText();
+        String actualAddress2 = driver.findElement(invoiceAddressLine1).getText();
+        String actualAddress3 = driver.findElement(invoiceAddressLine2).getText();
+        String actualCountry  = driver.findElement(invoiceCountry).getText();
+        String actualPhone    = driver.findElement(invoicePhone).getText();
+
+        return actualFullName.contains(fullName)
+                && actualAddress1.contains(company)
+                && actualAddress2.contains(address1)
+                && actualAddress3.contains(address2)
+                && actualCityStatePostcode.contains(cityStatePostcode)
+                && actualCountry.contains(country)
+                && actualPhone.contains(phone);
+    }
 
     public void AddComment(String comment){
-        driver.findElement(CommentArea).sendKeys(comment);
+        driver.findElement(CommentAreaTextField).sendKeys(comment);
+    }
+
+    public void ClickDeleteButton(){
+        driver.findElement(DeleteButton).click();
     }
 
     public PaymentPage ClickPlaceOrdButton(){
