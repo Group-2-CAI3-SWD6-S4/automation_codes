@@ -1,0 +1,44 @@
+package steps_def;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+
+public class tc_3_steps {
+    WebDriver driver;
+    @Given("user launches the browser and navigates to {string} and home page is visible successfully")
+    public void user_launches_the_browser_and_navigates_to_and_home_page_is_visible_successfully(String string) {
+        driver = new FirefoxDriver();
+        driver.manage().window().maximize();
+        driver.get("http://automationexercise.com");
+    }
+    @When("user clicks on {string} button")
+    public void user_clicks_on_button(String string) {
+        driver.findElement(By.linkText("Signup / Login")).click();
+
+    }
+    @Then("{string} section is visible")
+    public void section_is_visible(String string) {
+        String acualResult = driver.findElement(By.xpath("//*[@id=\"form\"]/div/div/div[1]/div/h2")).getText();
+        String exepectedResult = "Login to your account";
+        Assert.assertTrue(acualResult.contains(exepectedResult));
+    }
+    @When("user enters invalid email and password and clicks on {string} button")
+    public void user_enters_invalid_email_and_password_and_clicks_on_button(String string) {
+        driver.findElement(By.name("email")).sendKeys("bysvkdhnk@gmail.com");
+        driver.findElement(By.name("password")).sendKeys("869207");
+        driver.findElement(By.xpath("//*[@id=\"form\"]/div/div/div[1]/div/form/button")).click();
+    }
+    @Then("{string} message is visible")
+    public void message_is_visible(String string) {
+        String acualResult = driver.findElement(By.xpath("//*[@id=\"form\"]/div[1]/div/div[1]/div/form/p")).getText();
+        String exepectedResult = "Your email or password is incorrect!";
+        Assert.assertTrue(acualResult.contains(exepectedResult));
+        driver.quit();
+    }
+
+}
