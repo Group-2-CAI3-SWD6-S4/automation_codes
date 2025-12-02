@@ -1,0 +1,38 @@
+package TestCase_20_pkg;
+
+import Pages_pkg.CartPage;
+import Pages_pkg.LoginPage;
+import Pages_pkg.ProductsPage;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class TestCase_20 extends base_class {
+    @Test
+    public void SearchProductsandVerifyCartAfterLogin (){
+        String email    = "Depii@gmail.com";
+        String password ="admin12333333";
+        String ProductName = "blue";
+
+        ProductsPage productsPage = homePage.ClickOnProductLink();
+            Assert.assertTrue(productsPage.CheckAllProductAppear());
+        productsPage.InsertProduct(ProductName);
+        productsPage.ClickSearchButton();
+            Assert.assertTrue(productsPage.CheckSearchProductAppear());
+            Assert.assertTrue(productsPage.isSearchedProductsTitleVisible());
+            Assert.assertTrue(productsPage.verifyProductsContain(ProductName));
+        productsPage.addAllProductsToCart();
+
+
+        CartPage cartPage = productsPage.ClickCartBottun();
+        LoginPage loginPage = cartPage.ClickRegisterLoginButtonn();
+
+        loginPage.InsertLoginEmail(email);
+        loginPage.InsertLoginPassword(password);
+
+        homePage = loginPage.ClickLoginButton();
+        cartPage = homePage.ClickOnCartBottun();
+            Assert.assertTrue(cartPage.verifyProductsContain(ProductName));
+
+    }
+}
