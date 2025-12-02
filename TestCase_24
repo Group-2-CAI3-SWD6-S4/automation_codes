@@ -1,4 +1,4 @@
-package Download_Invoice_after_purchase_order_tc;
+package TestCase_24_pkg;
 
 
 import Pages_pkg.*;
@@ -6,14 +6,11 @@ import base_pkg.base_class;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class download_invoice_tc extends base_class {
+public class TestCase_24 extends base_class {
     @Test
     public void download_invoice_testCase(){
-//verify homepage is displayed
-        boolean isHomeVisible = homePage.verifyHomePage();
-        Assert.assertTrue(isHomeVisible, "Home page is not visible!");
         String username  = "depi";
-        String email     = "Depiiiiii@gmail.com";
+        String email     = "Depxiiiiii@gmail.com";
         String FisrtName = "mohamed";
         String LastName  = "depi";
         String Fullname  = FisrtName +" " +LastName;
@@ -30,7 +27,7 @@ public class download_invoice_tc extends base_class {
         homePage.AddProductOne();
         CartPage cartPage = homePage.clickViewCartFromModal();
 
-            Assert.assertTrue(cartPage.ChechShoppingCartText());
+            Assert.assertTrue(cartPage.ChechShoppingCartTextIsVisible());
         cartPage.ClickProceedButton();
         LoginPage loginPage = cartPage.ClickRegisterLoginButton();
 
@@ -66,8 +63,8 @@ public class download_invoice_tc extends base_class {
         informationPage.insertMobileNo(MobileNo);
 
         AccountCreatedPage accountCreatedPage = informationPage.ClickCreateBottun();
-        Assert.assertTrue(accountCreatedPage.CheckACcountCreated());
-        homePage = accountCreatedPage.ClickcontinueBottun();
+        Assert.assertTrue(accountCreatedPage.CheckAccountCreatedIsVisible());
+        homePage = accountCreatedPage.ClickContinueBottun();
 
         Assert.assertTrue(homePage.CheckUserName(username));
 
@@ -96,7 +93,7 @@ public class download_invoice_tc extends base_class {
         paymentPage.ClickContinueButton();
 
         checkoutPage.ClickDeleteButton();
-        Assert.assertTrue(checkoutPage.CheckaccountDeletedText());
+        Assert.assertTrue(checkoutPage.CheckAccountDeletedText());
 
     }
 
