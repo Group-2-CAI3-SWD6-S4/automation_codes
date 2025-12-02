@@ -2,23 +2,46 @@ package Pages_pkg;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+
+import java.time.Duration;
 
 public class AccountCreatedPage {
     WebDriver driver;
+    WebDriverWait wait;
+
     public AccountCreatedPage(WebDriver driver) {
         this.driver=driver;
+        this.wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
     }
-
-    private By ContinueBootun = By.xpath("//a[@data-qa='continue-button']");
+    //buttons locators
+    private By ContinueBottun     = By.xpath("//a[@data-qa='continue-button']");
+    //text locator
     private By accountCreatedText = By.xpath("//h2[@class='title text-center']");
+    private By continueButton = By.cssSelector("a[data-qa='continue-button']");
 
-    public boolean CheckACcountCreated(){
+    public boolean CheckAccountCreatedIsVisible(){
         String actual = driver.findElement(accountCreatedText).getText();
-        return actual.contains("Account Created!");
+        return actual.contains("ACCOUNT CREATED!");
     }
 
-    public HomePage_class ClickcontinueBottun(){
-        driver.findElement(ContinueBootun).click();
-        return new HomePage_class(driver);//homepage
+    public String getAccountCreatedMessage(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement messageElement = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(accountCreatedText)
+        );
+        return messageElement.getText();
+    }
+    public HomePage ClickContinueBottun(){
+        driver.findElement(ContinueBottun).click();
+        return new HomePage(driver);//homepage
+    }
+    public HomePage clickOnContinueButton(){
+        driver.findElement(continueButton).click();
+        return new HomePage(driver);
     }
 }
