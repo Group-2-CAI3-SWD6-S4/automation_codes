@@ -25,6 +25,42 @@ public class LoginPage {
     private By IncorrectPasswordText = By.xpath("//P[contains(text(),'Your email or password is incorrect!')]");
     private By existingEmailText     = By.xpath("//P[contains(text(),'Email Address already exist!')]");
 
+
+
+
+    //locators
+    private By emailBox = By.cssSelector("input[data-qa='login-email']");
+    private By passwordBox = By.cssSelector("input[data-qa='login-password']");
+    private By loginButton = By.cssSelector("button[data-qa='login-button']");
+    private By nameBox = By.cssSelector("input[data-qa='signup-name']");
+    private By signupEmailBox = By.cssSelector("input[data-qa='signup-email']");
+    private By signupButton = By.cssSelector("button[data-qa='signup-button']");
+
+    //actions
+    public void insertEmail(String email){
+        driver.findElement(emailBox).sendKeys(email);
+    }
+    public void insertPassword(String password){
+        driver.findElement(passwordBox).sendKeys(password);
+    }
+    public HomePage clickOnloginButton(){
+        driver.findElement(loginButton).click();
+        return new HomePage(driver);
+    }
+    public void insertName(String name){
+        driver.findElement(nameBox).sendKeys(name);
+    }
+    public void insertSignupEmail(String email){
+        driver.findElement(signupEmailBox).sendKeys(email);
+    }
+    public SignupPage clickOnSignupButton(){
+        driver.findElement(signupButton).click();
+        return new SignupPage(driver);
+    }
+
+
+
+
     public boolean CheckLoginText(){
         String actual = driver.findElement(LoginText).getText();
         return actual.contains("Login to your account");
@@ -51,9 +87,9 @@ public class LoginPage {
     public void InsertLoginPassword(String password){
         driver.findElement(LoginPassword).sendKeys(password);
     }
-    public HomePage_class ClickLoginButton(){
+    public HomePage ClickLoginButton(){
         driver.findElement(LoginButton).click();
-        return new HomePage_class(driver);
+        return new HomePage(driver);
     }
     public InformationPage ClickSignButton(){
         driver.findElement(SignUpBottun).click();
