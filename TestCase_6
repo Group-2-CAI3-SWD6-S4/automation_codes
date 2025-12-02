@@ -1,0 +1,26 @@
+package TestCase_6_pkg;
+
+import Pages_pkg.ContactUsPage;
+import base_pkg.base_class;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class TestCase_6 extends base_class {
+    @Test
+    public void ContactUsForm_tc(){
+        boolean isHomeVisible = homePage.verifyHomePage();
+        Assert.assertTrue(isHomeVisible, "Home page is not visible!");
+        ContactUsPage contactUsPage = homePage.ClickOnClickOnContactUs();
+        Assert.assertTrue(contactUsPage.GetInTouchTextIsvisible());
+        contactUsPage.InsertName("mohamed");
+        contactUsPage.InsertEmail("depi@gmail.com");
+        contactUsPage.InserSubject("project");
+        contactUsPage.InsertMessage("hello");
+        contactUsPage.ClickSubmitButton();
+
+        contactUsPage.acceptAlert();
+        Assert.assertTrue(contactUsPage.successMsgTextIsvisible());
+        homePage = contactUsPage.ClickHomeButton();
+
+    }
+}
