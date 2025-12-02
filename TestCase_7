@@ -1,13 +1,13 @@
-package Testcases_tc_pkg;
+package TestCase_7_pkg;
 
 import Pages_pkg.TestCasesPage;
 import base_pkg.base_class;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class testcase_tc extends base_class {
+public class TestCase_7 extends base_class {
     @Test
     public void TestCAsese_tc(){
-//verify homepage is displayed
         boolean isHomeVisible = homePage.verifyHomePage();
         Assert.assertTrue(isHomeVisible, "Home page is not visible!");
         TestCasesPage testCasesPage =homePage.ClickOnTestCasesButton();
